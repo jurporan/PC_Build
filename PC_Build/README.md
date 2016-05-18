@@ -1,4 +1,20 @@
-Activator template for Play Framework and the Slick database access library
-This template helps building a classic web app or a JSON API
+# PC Build
 
-For a more complex example, see the [computer database sample](https://github.com/playframework/play-slick/tree/master/samples/computer-database)
+Choose your pieces !
+
+## Auteurs
+
+Jérôme Moret  
+Jan Purro
+
+# Répartition des tâches
+
+## Modèles
+
+- **Processeur** Jan
+- **Carte Mère** Jérôme
+- **Mémoire** Jan
+- **Stockage** Jérôme
+- **Carte Graphique** Jan
+- **Alimentation** Jérôme
+- **Boitier** Jan
