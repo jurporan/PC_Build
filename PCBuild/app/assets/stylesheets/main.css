@@ -138,3 +138,7 @@ span.round-tab:hover {
         left: 35%;
     }
 }
+
+.clickable-row {
+    cursor: pointer;
+}
