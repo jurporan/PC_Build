@@ -1,11 +1,22 @@
 package controllers
 
 import models._
-import play.api.mvc.{Action, Controller}
-import views.html._
+import play.api.db.slick._
+import play.api.db.slick.Config.driver.simple._
+import play.api.data._
+import play.api.data.Forms._
+import play.api.mvc._
+import play.api.Play.current
+import play.api.mvc.BodyParsers._
+import play.api.libs.json.Json
+import play.api.libs.json.Json._
+import views.html.index
 
-object Application extends Controller{
-  def root = Action {
-    Ok(index.render)
+object Application extends Controller {
+
+  val motherboards = TableQuery[MotherboardTable]
+
+  def root = DBAction { implicit rs =>
+    Ok(index(motherboards.list))
   }
 }

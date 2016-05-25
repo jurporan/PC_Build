@@ -1,4 +1,4 @@
-@()
+@(motherboards: List[Motherboard])
 
 @main {
     <div class="container">
@@ -10,7 +10,7 @@
                         <ul class="nav nav-tabs" role="tablist">
 
                             <li role="presentation" class="active">
-                                <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
+                                <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Personal informations">
                                     <span class="round-tab">
                                         <i class="glyphicon glyphicon-user"></i>
                                     </span>
@@ -79,8 +79,45 @@
                     <form role="form">
                         <div class="tab-content">
                             <div class="tab-pane active" role="tabpanel" id="step1">
-                                <h3>Step 1</h3>
-                                <p>This is step 1</p>
+                                <!--<h1>Personal informations</h1>
+                                <form role="form">
+                                    <div class="form-group">
+                                        <label for="name">Name:</label>
+                                        <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="budget">Budget:</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" id="budget" placeholder="Enter your budget">
+                                            <span class="input-group-addon">CHF</span>
+                                        </div>
+                                    </div>
+                                </form>-->
+                                <h1>Motherboards</h1>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Manufacturer</th>
+                                            <th>Model</th>
+                                            <th>Socket CPU</th>
+                                            <th>Popularity</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for(motherboard <- motherboards) {
+                                            <tr>
+                                                <td>@motherboard.imgUrl</td>
+                                                <td>@motherboard.manufacturer</td>
+                                                <td>@motherboard.model</td>
+                                                <td>@motherboard.socket</td>
+                                                <td>@motherboard.popularity</td>
+                                                <td>@motherboard.price</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
                                 <ul class="list-inline pull-right">
                                     <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
                                 </ul>
