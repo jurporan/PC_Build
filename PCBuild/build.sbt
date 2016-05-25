@@ -1,4 +1,4 @@
-name := "PCBuild"
+name := """PCBuild"""
 
 version := "1.0-SNAPSHOT"
 
