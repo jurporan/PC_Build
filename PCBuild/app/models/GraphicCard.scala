@@ -21,5 +21,5 @@ class GraphicCardTable(tag: Tag) extends Table[GraphicCard](tag, "GRAPHIC_CARD")
   def price = column[Float]("PRICE", O.NotNull)
   def imageURL = column[String]("IMAGE_URL")
 
-  def * = (id, model, manufacturer, memory, frequency, width, height, length, consumption, popularity, price) <> (GraphicCard.tupled, GraphicCard.unapply)
+  def * = (id, model, manufacturer, memory, frequency, width, height, length, consumption, popularity, price, imageURL) <> (GraphicCard.tupled, GraphicCard.unapply)
 }

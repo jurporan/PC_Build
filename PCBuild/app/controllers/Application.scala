@@ -15,8 +15,9 @@ import views.html.index
 object Application extends Controller {
 
   val motherboards = TableQuery[MotherboardTable]
+  val processors = TableQuery[ProcessorTable]
 
   def root = DBAction { implicit rs =>
-    Ok(index(motherboards.list))
+    Ok(index(motherboards.list, processors.list))
   }
 }

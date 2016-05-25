@@ -14,5 +14,17 @@
         <th>Price</th>
     </thead>
     <tbody>
-        <td></td>
+        @for(processor <- processors) {
+            <tr>
+                <td>@processor.imageURL</td>
+                <td>@processor.manufacturer</td>
+                <td>@processor.model</td>
+                <td>@processor.frequency</td>
+                <td>@processor.nbCores</td>
+                <td>@processor.nbThreads</td>
+                <td>@processor.socket</td>
+                <td>@processor.popularity</td>
+                <td>@processor.price</td>
+            </tr>
+        }
     </tbody>

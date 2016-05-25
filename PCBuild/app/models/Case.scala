@@ -2,11 +2,11 @@ package models
 
 import play.api.db.slick.Config.driver.simple._
 
-case class Case(id: Int, model: String, manufacturer: String, width: Float, height: Float, length: Float,  popularity: Int, price: Float, imageURL: String)
+case class ComputerCase(id: Int, model: String, manufacturer: String, width: Float, height: Float, length: Float,  popularity: Int, price: Float, imageURL: String)
 
 /* Table mapping
  */
-class CaseTable(tag: Tag) extends Table[Case](tag, "CASE")
+class ComputerCaseTable(tag: Tag) extends Table[ComputerCase](tag, "COMPUTER_CASE")
 {
   def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
   def model = column[String]("NAME", O.NotNull)
@@ -18,5 +18,5 @@ class CaseTable(tag: Tag) extends Table[Case](tag, "CASE")
   def price = column[Float]("PRICE", O.NotNull)
   def imageURL = column[String]("IMAGE_URL")
 
-  def * = (id, model, manufacturer, width, height, length, popularity, price) <> (Case.tupled, Case.unapply)
+  def * = (id, model, manufacturer, width, height, length, popularity, price, imageURL) <> (Case.tupled, Case.unapply)
 }

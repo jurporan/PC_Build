@@ -9,7 +9,7 @@ case class Processor(id: Int, model: String, manufacturer: String, socket: Strin
 class ProcessorTable(tag: Tag) extends Table[Processor](tag, "PROCESSOR")
 {
   def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
-  def model = column[String]("NAME", O.NotNull)
+  def model = column[String]("MODEL", O.NotNull)
   def manufacturer = column[String]("MANUFACTURER", O.NotNull)
   def socket = column[String]("SOCKET", O.NotNull)
   def nbCores = column[Int]("NB_CORES", O.NotNull)
