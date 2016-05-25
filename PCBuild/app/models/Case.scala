@@ -2,7 +2,7 @@ package models
 
 import play.api.db.slick.Config.driver.simple._
 
-case class Case(id: Int, model: String, manufacturer: String, width: Float, height: Float, depht: Float,  popularity: Int)
+case class Case(id: Int, model: String, manufacturer: String, width: Float, height: Float, length: Float,  popularity: Int)
 
 /* Table mapping
  */
@@ -13,6 +13,6 @@ class CaseTable(tag: Tag) extends Case[Memory](tag, "CASE")
   def manufacturer = column[String]("MANUFACTURER", O.NotNUll)
   def width = column[Float]("WIDTH", O.NotNUll)
   def height = column[Float]("HEIGHT", O.NotNUll)
-  def depht = column[Float]("DEPHT", O.NotNUll)
+  def length = column[Float]("LENGTHT", O.NotNUll)
   def popularity = column[Int]("POPULARITY", O.NotNull)
 }
