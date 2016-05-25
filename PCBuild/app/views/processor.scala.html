@@ -1,0 +1,30 @@
+@(processors: List[Processor])
+
+<h3>Processor</h3>
+<table>
+    <thead>
+        <th>Image</th>
+        <th>Manufacturer</th>
+        <th>Model</th>
+        <th>Frequency</th>
+        <th>Cores</th>
+        <th>Threads</th>
+        <th>Socket</th>
+        <th>Popularity</th>
+        <th>Price</th>
+    </thead>
+    <tbody>
+        @for(processor <- processors) {
+            <tr>
+                <td>@processor.imageURL</td>
+                <td>@processor.manufacturer</td>
+                <td>@processor.model</td>
+                <td>@processor.frequency</td>
+                <td>@processor.nbCores</td>
+                <td>@processor.nbThreads</td>
+                <td>@processor.socket</td>
+                <td>@processor.popularity</td>
+                <td>@processor.price</td>
+            </tr>
+        }
+    </tbody>
