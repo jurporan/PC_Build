@@ -20,7 +20,7 @@ class StorageTable(tag: Tag) extends Table[Storage](tag, "STORAGE") {
   def model = column[String]("MODEL", O.NotNull)
   def gigabytes = column[Int]("GIGABYTES", O.NotNull)
   def rotationSpeed = column[Int]("ROTATION_SPEED", O.NotNull)
-  def imageUrl = column[String]("IMG_URL", O.NotNull)
+  def imageUrl = column[String]("IMAGE_URL", O.NotNull)
   def price = column[Float]("PRICE", O.NotNull)
 
   def popularity = column[Int]("POPULARITY", O.NotNull)

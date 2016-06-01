@@ -5,7 +5,13 @@
 # Home page
 GET     /                           controllers.Application.root
 
+GET     /processors                 controllers.Application.getProcessors()
 GET     /motherboards               controllers.Application.getMotherboards(socket: String)
+GET     /memories                   controllers.Application.getMemories(memoryType: String)
+GET     /storages                   controllers.Application.getStorages()
+GET     /graphic_cards              controllers.Application.getGraphicCards()
+GET     /alimentations              controllers.Application.getAlimentations(power: Float)
+GET     /computer_cases             controllers.Application.getComputerCases(gcLength: Float)
 
 
 # Map static resources from the /public folder to the /assets URL path

@@ -9,6 +9,7 @@ case class Processor(id: Int, model: String, manufacturer: String, socket: Strin
 class ProcessorTable(tag: Tag) extends Table[Processor](tag, "PROCESSOR")
 {
   def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
+
   def model = column[String]("MODEL", O.NotNull)
   def manufacturer = column[String]("MANUFACTURER", O.NotNull)
   def socket = column[String]("SOCKET", O.NotNull)
@@ -19,6 +20,7 @@ class ProcessorTable(tag: Tag) extends Table[Processor](tag, "PROCESSOR")
   def popularity = column[Int]("POPULARITY", O.NotNull)
   def price = column[Float]("PRICE", O.NotNull)
   def imageURL = column[String]("IMAGE_URL")
+
 
   def * = (id, model, manufacturer, socket, nbCores, nbThreads, frequency, consumption, popularity, price, imageURL) <> (Processor.tupled, Processor.unapply)
 }
