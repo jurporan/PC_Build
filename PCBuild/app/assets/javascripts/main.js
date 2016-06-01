@@ -15,12 +15,13 @@ $(document).ready(function () {
         }
     });
 
-    $(".next-step").click(function (e) {
-
-        var $active = $('.wizard .nav-tabs li.active');
-        $active.next().removeClass('disabled');
-        nextTab($active);
-
+    $("form").submit(function (e) {
+        e.preventDefault();
+        if(checkConditions($(this).attr('id'))) {
+            var $active = $('.wizard .nav-tabs li.active');
+            $active.next().removeClass('disabled');
+            nextTab($active);
+        }
     });
 
     $(".prev-step").click(function (e) {
@@ -33,6 +34,7 @@ $(document).ready(function () {
     $('.clickable-row').click(function(event) {
         $(this).addClass('active').siblings().removeClass('active');
     });
+
 });
 
 function nextTab(elem) {
@@ -40,4 +42,11 @@ function nextTab(elem) {
 }
 function prevTab(elem) {
     $(elem).prev().find('a[data-toggle="tab"]').click();
+}
+function checkConditions(id) {
+    switch (id) {
+        case "personal-inf-save":
+            return true;
+            break;
+    }
 }

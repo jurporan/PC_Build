@@ -10,7 +10,7 @@
                         <ul class="nav nav-tabs" role="tablist">
 
                             <li role="presentation" class="active">
-                                <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Personal informations">
+                                <a href="#personal-informations" data-toggle="tab" aria-controls="step1" role="tab" title="Personal informations">
                                     <span class="round-tab">
                                         <i class="glyphicon glyphicon-user"></i>
                                     </span>
@@ -18,7 +18,7 @@
                             </li>
 
                             <li role="presentation" class="disabled">
-                                <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Processor">
+                                <a href="#processor" data-toggle="tab" aria-controls="step2" role="tab" title="Processor">
                                     <span class="round-tab">
                                         <i class="glyphicon glyphicon-scale"></i>
                                     </span>
@@ -76,83 +76,78 @@
                         </ul>
                     </div>
 
-                    <form role="form">
-                        <div class="tab-content">
-                            <div class="tab-pane active" role="tabpanel" id="step1">
-                                <h1>Personal informations</h1>
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label for="name">Name:</label>
-                                        <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                    <div class="tab-content">
+                        <div class="tab-pane active" role="tabpanel" id="personal-informations">
+                            <h1>Personal informations</h1>
+                            <form role="form" id="personal-inf-save">
+                                <div class="form-group">
+                                    <label for="name">Name:</label>
+                                    <input required type="text" class="form-control" id="name" placeholder="Enter your name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="budget">Budget:</label>
+                                    <div class="input-group">
+                                        <input required type="number" class="form-control" id="budget" placeholder="Enter your budget" step="0.1" min="1">
+                                        <span class="input-group-addon">CHF</span>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="budget">Budget:</label>
-                                        <div class="input-group">
-                                            <input type="number" class="form-control" id="budget" placeholder="Enter your budget" step="0.1">
-                                            <span class="input-group-addon">CHF</span>
-                                        </div>
-                                    </div>
-                                </form>
-                                <!-- TODO Post le formulaire en ajax et récupérer en ajx les contenus de la table pour les prochains composants -->
-                                <!--<h1>Motherboards</h1>
-                                <table class="table table-hover components-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Image</th>
-                                            <th>Manufacturer</th>
-                                            <th>Model</th>
-                                            <th>Socket CPU</th>
-                                            <th>Popularity</th>
-                                            <th>Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @for(motherboard <- motherboards) {
-                                            <tr class="clickable-row">
-                                                <td><img src="@motherboard.imgUrl" alt="motherboard_img" height="60"></td>
-                                                <td>@motherboard.manufacturer</td>
-                                                <td>@motherboard.model</td>
-                                                <td>@motherboard.socket</td>
-                                                <td>@motherboard.popularity</td>
-                                                <td>@motherboard.price</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-<<<<<<< HEAD
-                                </table>-->
-=======
-                                    @processor(processors)
-                                </table>
->>>>>>> 01d83379cd51f0a154ca3e03fcc4cb0e56f65790
+                                </div>
                                 <ul class="list-inline pull-right">
-                                    <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+                                    <li><button type="submit" class="btn btn-primary next-step">Save and continue</button></li>
                                 </ul>
-                            </div>
-                            <div class="tab-pane" role="tabpanel" id="step2">
-<<<<<<< HEAD
-                                <h1>Processor</h1>
-                                <p>This is step 2</p>
-=======
->>>>>>> 01d83379cd51f0a154ca3e03fcc4cb0e56f65790
-                                <ul class="list-inline pull-right">
-                                    <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-                                    <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
-                                </ul>
-                            </div>
-                            <div class="tab-pane" role="tabpanel" id="step3">
-                                <ul class="list-inline pull-right">
-                                    <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-                                    <li><button type="button" class="btn btn-default next-step">Skip</button></li>
-                                    <li><button type="button" class="btn btn-primary btn-info-full next-step">Save and continue</button></li>
-                                </ul>
-                            </div>
-                            <div class="tab-pane" role="tabpanel" id="complete">
-                                <h3>Complete</h3>
-                                <p>You have successfully completed all steps.</p>
-                            </div>
-                            <div class="clearfix"></div>
+                            </form>
                         </div>
-                    </form>
+                        <div class="tab-pane" role="tabpanel" id="processor">
+                            <h1>Processor</h1>
+                            <table class="table table-hover components-table">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Manufacturer</th>
+                                        <th>Model</th>
+                                        <th>Socket</th>
+                                        <th>Cores</th>
+                                        <th>Threads</th>
+                                        <th>Frequency</th>
+                                        <th>Consumption</th>
+                                        <th>Popularity</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @for(processor <- processors) {
+                                    <tr class="clickable-row">
+                                        <td><img src="@processor.imageURL" alt="processor_img" height="60"></td>
+                                        <td>@processor.manufacturer</td>
+                                        <td>@processor.model</td>
+                                        <td>@processor.socket</td>
+                                        <td>@processor.nbCores</td>
+                                        <td>@processor.nbThreads</td>
+                                        <td>@processor.frequency</td>
+                                        <td>@processor.consumption</td>
+                                        <td>@processor.popularity</td>
+                                        <td>@processor.price</td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                            <ul class="list-inline pull-right">
+                                <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
+                                <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="step3">
+                            <ul class="list-inline pull-right">
+                                <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
+                                <li><button type="button" class="btn btn-default next-step">Skip</button></li>
+                                <li><button type="button" class="btn btn-primary btn-info-full next-step">Save and continue</button></li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="complete">
+                            <h3>Complete</h3>
+                            <p>You have successfully completed all steps.</p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </section>
         </div>
