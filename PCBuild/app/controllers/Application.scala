@@ -17,7 +17,14 @@ object Application extends Controller {
   val motherboards = TableQuery[MotherboardTable]
   val processors = TableQuery[ProcessorTable]
 
+  implicit val motherboardFormat = Json.format[Motherboard]
+
   def root = DBAction { implicit rs =>
     Ok(index(motherboards.list, processors.list))
+  }
+
+  def getMotherboards(socket: String) = DBAction { implicit rs =>
+    val json = Json.toJson(motherboards.filter(_.socket === socket).list);
+    Ok(json)
   }
 }

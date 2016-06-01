@@ -1,6 +1,7 @@
 package models
 
 import play.api.db.slick.Config.driver.simple._
+import play.api.libs.json.Json
 
 
 case class Motherboard(id: Int, manufacturer: String, model: String, socket: String, imgUrl: String, price: Float, popularity: Int)

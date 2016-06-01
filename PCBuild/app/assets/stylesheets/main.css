@@ -139,6 +139,19 @@ span.round-tab:hover {
     }
 }
 
-.clickable-row {
+tr.clickable-row {
     cursor: pointer;
+}
+
+tr.clickable-row:hover {
+    background-color: #ecf0f1;
+}
+
+tr.disabled {
+    color: #921e12;
+    font-weight: bold;
+}
+
+li.paginate_button.active:after {
+    opacity: 0;
 }
