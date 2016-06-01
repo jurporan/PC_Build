@@ -18,7 +18,7 @@
                             </li>
 
                             <li role="presentation" class="disabled">
-                                <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+                                <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Processor">
                                     <span class="round-tab">
                                         <i class="glyphicon glyphicon-scale"></i>
                                     </span>
@@ -26,7 +26,7 @@
                             </li>
 
                             <li role="presentation" class="disabled">
-                                <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
+                                <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Motherboard">
                                     <span class="round-tab">
                                         <i class="glyphicon glyphicon-modal-window"></i>
                                     </span>
@@ -34,7 +34,7 @@
                             </li>
 
                             <li role="presentation" class="disabled">
-                                <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="Step 4">
+                                <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="Memory">
                                     <span class="round-tab">
                                         <i class="glyphicon glyphicon-oil"></i>
                                     </span>
@@ -42,7 +42,7 @@
                             </li>
 
                             <li role="presentation" class="disabled">
-                                <a href="#step5" data-toggle="tab" aria-controls="step5" role="tab" title="Step 5">
+                                <a href="#step5" data-toggle="tab" aria-controls="step5" role="tab" title="Storage">
                                     <span class="round-tab">
                                         <i class="glyphicon glyphicon-hdd"></i>
                                     </span>
@@ -50,7 +50,7 @@
                             </li>
 
                             <li role="presentation" class="disabled">
-                                <a href="#step6" data-toggle="tab" aria-controls="step6" role="tab" title="Step 6">
+                                <a href="#step6" data-toggle="tab" aria-controls="step6" role="tab" title="Graphic card">
                                     <span class="round-tab">
                                         <i class="glyphicon glyphicon-eye-open"></i>
                                     </span>
@@ -58,7 +58,7 @@
                             </li>
 
                             <li role="presentation" class="disabled">
-                                <a href="#step6" data-toggle="tab" aria-controls="step6" role="tab" title="Step 6">
+                                <a href="#step6" data-toggle="tab" aria-controls="step6" role="tab" title="Alimentation">
                                     <span class="round-tab">
                                         <i class="fa fa-plug"></i>
                                     </span>
@@ -79,7 +79,7 @@
                     <form role="form">
                         <div class="tab-content">
                             <div class="tab-pane active" role="tabpanel" id="step1">
-                                <!--<h1>Personal informations</h1>
+                                <h1>Personal informations</h1>
                                 <form role="form">
                                     <div class="form-group">
                                         <label for="name">Name:</label>
@@ -88,13 +88,14 @@
                                     <div class="form-group">
                                         <label for="budget">Budget:</label>
                                         <div class="input-group">
-                                            <input type="number" class="form-control" id="budget" placeholder="Enter your budget">
+                                            <input type="number" class="form-control" id="budget" placeholder="Enter your budget" step="0.1">
                                             <span class="input-group-addon">CHF</span>
                                         </div>
                                     </div>
-                                </form>-->
-                                <h1>Motherboards</h1>
-                                <table class="table table-striped">
+                                </form>
+                                <!-- TODO Post le formulaire en ajax et récupérer en ajx les contenus de la table pour les prochains composants -->
+                                <!--<h1>Motherboards</h1>
+                                <table class="table table-hover components-table">
                                     <thead>
                                         <tr>
                                             <th>Image</th>
@@ -107,8 +108,8 @@
                                     </thead>
                                     <tbody>
                                         @for(motherboard <- motherboards) {
-                                            <tr>
-                                                <td>@motherboard.imgUrl</td>
+                                            <tr class="clickable-row">
+                                                <td><img src="@motherboard.imgUrl" alt="motherboard_img" height="60"></td>
                                                 <td>@motherboard.manufacturer</td>
                                                 <td>@motherboard.model</td>
                                                 <td>@motherboard.socket</td>
@@ -117,13 +118,22 @@
                                             </tr>
                                         }
                                     </tbody>
+<<<<<<< HEAD
+                                </table>-->
+=======
                                     @processor(processors)
                                 </table>
+>>>>>>> 01d83379cd51f0a154ca3e03fcc4cb0e56f65790
                                 <ul class="list-inline pull-right">
                                     <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
                                 </ul>
                             </div>
                             <div class="tab-pane" role="tabpanel" id="step2">
+<<<<<<< HEAD
+                                <h1>Processor</h1>
+                                <p>This is step 2</p>
+=======
+>>>>>>> 01d83379cd51f0a154ca3e03fcc4cb0e56f65790
                                 <ul class="list-inline pull-right">
                                     <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
                                     <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>

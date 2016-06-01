@@ -22,11 +22,16 @@ $(document).ready(function () {
         nextTab($active);
 
     });
+
     $(".prev-step").click(function (e) {
 
         var $active = $('.wizard .nav-tabs li.active');
         prevTab($active);
 
+    });
+
+    $('.clickable-row').click(function(event) {
+        $(this).addClass('active').siblings().removeClass('active');
     });
 });
 

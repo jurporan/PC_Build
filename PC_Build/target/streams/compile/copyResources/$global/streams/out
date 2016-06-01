@@ -1,0 +1,6 @@
+[0m[[0mdebug[0m] [0mCopy resource mappings: [0m
+[0m[[0mdebug[0m] [0m	(C:\Users\jermo\Documents\PC_Build\PC_Build\conf\application.conf,C:\Users\jermo\Documents\PC_Build\PC_Build\target\scala-2.11\classes\application.conf)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\jermo\Documents\PC_Build\PC_Build\conf\evolutions,C:\Users\jermo\Documents\PC_Build\PC_Build\target\scala-2.11\classes\evolutions)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\jermo\Documents\PC_Build\PC_Build\conf\routes,C:\Users\jermo\Documents\PC_Build\PC_Build\target\scala-2.11\classes\routes)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\jermo\Documents\PC_Build\PC_Build\conf\evolutions\default,C:\Users\jermo\Documents\PC_Build\PC_Build\target\scala-2.11\classes\evolutions\default)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\jermo\Documents\PC_Build\PC_Build\conf\evolutions\default\1.sql,C:\Users\jermo\Documents\PC_Build\PC_Build\target\scala-2.11\classes\evolutions\default\1.sql)[0m
