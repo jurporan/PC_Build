@@ -18,5 +18,5 @@ class ComputerCaseTable(tag: Tag) extends Table[ComputerCase](tag, "COMPUTER_CAS
   def price = column[Float]("PRICE", O.NotNull)
   def imageURL = column[String]("IMAGE_URL")
 
-  def * = (id, model, manufacturer, width, height, length, popularity, price, imageURL) <> (Case.tupled, Case.unapply)
+  def * = (id, model, manufacturer, width, height, length, popularity, price, imageURL) <> (ComputerCase.tupled, ComputerCase.unapply)
 }

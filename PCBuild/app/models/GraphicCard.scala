@@ -9,7 +9,7 @@ case class GraphicCard(id: Int, model: String, manufacturer: String, memory: Flo
 class GraphicCardTable(tag: Tag) extends Table[GraphicCard](tag, "GRAPHIC_CARD")
 {
   def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
-  def model = column[String]("NAME", O.NotNull)
+  def model = column[String]("MODEL", O.NotNull)
   def manufacturer = column[String]("MANUFACTURER", O.NotNull)
   def memory = column[Float]("MEMORY", O.NotNull)
   def frequency = column[Float]("FREQUENCY", O.NotNull)
