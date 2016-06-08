@@ -1,4 +1,4 @@
-@(motherboards: List[Motherboard], processors: List[Processor])
+@()
 
 @main {
     <div class="container">
@@ -26,7 +26,7 @@
                             </li>
 
                             <li role="presentation" class="disabled">
-                                <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Motherboard">
+                                <a href="#motherboard" data-toggle="tab" aria-controls="step3" role="tab" title="Motherboard">
                                     <span class="round-tab">
                                         <i class="glyphicon glyphicon-modal-window"></i>
                                     </span>
@@ -34,7 +34,7 @@
                             </li>
 
                             <li role="presentation" class="disabled">
-                                <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="Memory">
+                                <a href="#memory" data-toggle="tab" aria-controls="step4" role="tab" title="Memory">
                                     <span class="round-tab">
                                         <i class="glyphicon glyphicon-oil"></i>
                                     </span>
@@ -42,7 +42,7 @@
                             </li>
 
                             <li role="presentation" class="disabled">
-                                <a href="#step5" data-toggle="tab" aria-controls="step5" role="tab" title="Storage">
+                                <a href="#storage" data-toggle="tab" aria-controls="step5" role="tab" title="Storage">
                                     <span class="round-tab">
                                         <i class="glyphicon glyphicon-hdd"></i>
                                     </span>
@@ -50,7 +50,7 @@
                             </li>
 
                             <li role="presentation" class="disabled">
-                                <a href="#step6" data-toggle="tab" aria-controls="step6" role="tab" title="Graphic card">
+                                <a href="#graphic-card" data-toggle="tab" aria-controls="step6" role="tab" title="Graphic card">
                                     <span class="round-tab">
                                         <i class="glyphicon glyphicon-eye-open"></i>
                                     </span>
@@ -58,9 +58,17 @@
                             </li>
 
                             <li role="presentation" class="disabled">
-                                <a href="#step6" data-toggle="tab" aria-controls="step6" role="tab" title="Alimentation">
+                                <a href="#alimentation" data-toggle="tab" aria-controls="step7" role="tab" title="Alimentation">
                                     <span class="round-tab">
                                         <i class="fa fa-plug"></i>
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li role="presentation" class="disabled">
+                                <a href="#computer-case" data-toggle="tab" aria-controls="step8" role="tab" title="Computer case">
+                                    <span class="round-tab">
+                                        <i class="glyphicon glyphicon-briefcase"></i>
                                     </span>
                                 </a>
                             </li>
@@ -77,17 +85,18 @@
                     </div>
 
                     <div class="tab-content">
+
                         <div class="tab-pane active" role="tabpanel" id="personal-informations">
                             <h1>Personal informations</h1>
                             <form role="form" id="personal-inf-save">
                                 <div class="form-group">
                                     <label for="name">Name:</label>
-                                    <input required type="text" class="form-control" id="name" placeholder="Enter your name">
+                                    <input required type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
                                 </div>
                                 <div class="form-group">
                                     <label for="budget">Budget:</label>
                                     <div class="input-group">
-                                        <input required type="number" class="form-control" id="budget" placeholder="Enter your budget" step="0.1" min="1">
+                                        <input required type="number" class="form-control" id="budget" name="budget" placeholder="Enter your budget" step="0.1" min="1">
                                         <span class="input-group-addon">CHF</span>
                                     </div>
                                 </div>
@@ -96,52 +105,28 @@
                                 </ul>
                             </form>
                         </div>
+
                         <div class="tab-pane" role="tabpanel" id="processor">
-                            <h1>Processor</h1>
-                            <table class="table table-hover components-table">
-                                <thead>
-                                    <tr>
-                                        <th>Image</th>
-                                        <th>Manufacturer</th>
-                                        <th>Model</th>
-                                        <th>Socket</th>
-                                        <th>Cores</th>
-                                        <th>Threads</th>
-                                        <th>Frequency</th>
-                                        <th>Consumption</th>
-                                        <th>Popularity</th>
-                                        <th>Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @for(processor <- processors) {
-                                    <tr class="clickable-row">
-                                        <td><img src="@processor.imageURL" alt="processor_img" height="60"></td>
-                                        <td>@processor.manufacturer</td>
-                                        <td>@processor.model</td>
-                                        <td>@processor.socket</td>
-                                        <td>@processor.nbCores</td>
-                                        <td>@processor.nbThreads</td>
-                                        <td>@processor.frequency</td>
-                                        <td>@processor.consumption</td>
-                                        <td>@processor.popularity</td>
-                                        <td>@processor.price</td>
-                                    </tr>
-                                }
-                                </tbody>
-                            </table>
-                            <ul class="list-inline pull-right">
-                                <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-                                <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
-                            </ul>
                         </div>
-                        <div class="tab-pane" role="tabpanel" id="step3">
-                            <ul class="list-inline pull-right">
-                                <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-                                <li><button type="button" class="btn btn-default next-step">Skip</button></li>
-                                <li><button type="button" class="btn btn-primary btn-info-full next-step">Save and continue</button></li>
-                            </ul>
+
+                        <div class="tab-pane" role="tabpanel" id="motherboard">
                         </div>
+
+                        <div class="tab-pane" role="tabpanel" id="memory">
+                        </div>
+
+                        <div class="tab-pane" role="tabpanel" id="storage">
+                        </div>
+
+                        <div class="tab-pane" role="tabpanel" id="graphic-card">
+                        </div>
+
+                        <div class="tab-pane" role="tabpanel" id="alimentation">
+                        </div>
+
+                        <div class="tab-pane" role="tabpanel" id="computer-case">
+                        </div>
+
                         <div class="tab-pane" role="tabpanel" id="complete">
                             <div class="container">
                                 <h1>Computer Completed</h1>

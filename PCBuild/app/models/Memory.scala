@@ -2,7 +2,7 @@ package models
 
 import play.api.db.slick.Config.driver.simple._
 
-case class Memory(id: Int, model: String, manufacturer: String, memorySize: Float, memoryType: String, popularity: Int, price: Float, imageURL: String)
+case class Memory(id: Int, model: String, manufacturer: String, memorySize: Float, memoryType: String, popularity: Int, price: Float, imageUrl: String)
 
 /* Table mapping
  */
@@ -15,7 +15,7 @@ class MemoryTable(tag: Tag) extends Table[Memory](tag, "MEMORY")
   def memoryType = column[String]("MEMORY_TYPE", O.NotNull)
   def popularity = column[Int]("POPULARITY", O.NotNull)
   def price = column[Float]("PRICE", O.NotNull)
-  def imageURL = column[String]("IMAGE_URL")
+  def imageUrl = column[String]("IMAGE_URL")
 
-  def * = (id, model, manufacturer, memorySize, memoryType, popularity, price, imageURL) <> (Memory.tupled, Memory.unapply)
+  def * = (id, model, manufacturer, memorySize, memoryType, popularity, price, imageUrl) <> (Memory.tupled, Memory.unapply)
 }

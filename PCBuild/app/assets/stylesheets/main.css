@@ -65,7 +65,7 @@ span.round-tab:hover {
 }
 
 .wizard .nav-tabs > li {
-    width: 12.5%;
+    width: 11%;
 }
 
 .wizard li:after {
@@ -139,6 +139,19 @@ span.round-tab:hover {
     }
 }
 
-.clickable-row {
+tr.clickable-row {
     cursor: pointer;
+}
+
+tr.clickable-row:hover {
+    background-color: #ecf0f1;
+}
+
+tr.disabled {
+    color: #921e12;
+    font-weight: bold;
+}
+
+li.paginate_button.active:after {
+    opacity: 0;
 }
