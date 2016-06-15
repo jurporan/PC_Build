@@ -43,7 +43,7 @@ $(document).ready(function () {
 
                 for(var i = 0; i < data.length; ++i) {
 
-                    content += '<tr class="clickable-row">';
+                    content += '<tr class="clickable-row" data-id=' + data[i].id + '>';
 
                     for(var j = 1; j < Object.keys(data[0]).length; ++j) {
                         if(Object.keys(data[0])[j].toUpperCase() === 'IMAGEURL') {
@@ -125,6 +125,13 @@ $(document).ready(function () {
 
     var customerName;
     var customerBudget;
+    var processorId;
+    var motherBoardId;
+    var memoryId;
+    var storageId;
+    var graphicCardId;
+    var alimentationId;
+    var caseId;
 
     //Initialize tooltips
     $('.nav-tabs > li a[title]').tooltip();
@@ -184,6 +191,7 @@ $(document).ready(function () {
                     callback(false);
                 }
 
+                processorId = $active_row.data('id');
                 var socket = $active_row.find('td[data-field="socket"]').text();
                 socket = socket.replace('+', '%2B');
 
@@ -199,6 +207,7 @@ $(document).ready(function () {
                     callback(false);
                 }
 
+                motherBoardId = $active_row.data('id');
                 var memoryType = $active_row.find('td[data-field="memoryType"]').text();
 
                 createDataTable("memory", '/memories?memoryType=' + memoryType, function () {
@@ -212,6 +221,7 @@ $(document).ready(function () {
                     callback(false);
                 }
 
+                memoryId = $active_row.data('id');
                 createDataTable("storage", '/storages', function () {
                     callback(true);
                 });
@@ -223,6 +233,7 @@ $(document).ready(function () {
                     callback(false);
                 }
 
+                storageId = $active_row.data('id');
                 createDataTable("graphic-card", '/graphic_cards', function () {
                     callback(true);
                 });
@@ -235,6 +246,7 @@ $(document).ready(function () {
                     callback(false);
                 }
 
+                graphicCardId = $active_row.data('id');
                 var consumptionGC = parseFloat($active_row.find('td[data-field="consumption"]').text());
                 var consumptionCPU = parseFloat($('div#processor').find('tr.active td[data-field="consumption"]').text())
 
@@ -250,6 +262,7 @@ $(document).ready(function () {
                     callback(false);
                 }
 
+                alimentationId = $active_row.data('id');
                 var gcLength = parseFloat($('div#graphic-card').find('tr.active td[data-field="length"]').text());
 
                 createDataTable("computer-case", '/computer_cases?gcLength=' + gcLength, function () {
@@ -260,6 +273,8 @@ $(document).ready(function () {
 
             case 'computer-case':
                 callback(true);
+
+                caseId = $active_row.data('id');
                 // TODO Gérer les problèmes de budget et attention au retour en arrière, regarder une solution pour soit bloquer le passage en avant
                 // TODO Passer tous les composants à la vue finale pour l'affichage
                 break;
