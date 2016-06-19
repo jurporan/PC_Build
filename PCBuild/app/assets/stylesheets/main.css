@@ -147,11 +147,20 @@ tr.clickable-row:hover {
     background-color: #ecf0f1;
 }
 
-tr.disabled {
-    color: #921e12;
+tr.out-of-budget {
+    cursor: not-allowed;
+}
+
+td.out-of-budget {
     font-weight: bold;
+    text-decoration: underline;
+    color: #921e12;
 }
 
 li.paginate_button.active:after {
     opacity: 0;
+}
+
+.title-left {
+    display: inline;
 }

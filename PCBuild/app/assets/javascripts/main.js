@@ -1,6 +1,18 @@
 /**
  * Created by jermo on 24.05.2016.
  */
+jQuery.fn.dataTableExt.oSort['numeric-unit-asc']  = function(a,b) {
+    x = parseFloat( a );
+    y = parseFloat( b );
+    return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+};
+
+jQuery.fn.dataTableExt.oSort['numeric-unit-desc'] = function(a,b) {
+    x = parseFloat( a );
+    y = parseFloat( b );
+    return ((x < y) ?  1 : ((x > y) ? -1 : 0));
+};
+
 $(document).ready(function () {
 
     function firstToUpperCase(str) {
@@ -11,6 +23,9 @@ $(document).ready(function () {
         $(elem).next().find('a[data-toggle="tab"]').click();
         $('tr.clickable-row').click(function () {
             $(this).addClass('active').siblings().removeClass('active');
+            $('.nav-tabs li.active').nextAll().addClass('disabled');
+            refreshRemainingBudget();
+            $(this).closest('div.tab-pane').find('.remaining-budget').text(remainingBudget.toFixed(2));
         });
     }
 
@@ -18,8 +33,61 @@ $(document).ready(function () {
         $(elem).prev().find('a[data-toggle="tab"]').click();
     }
 
+    function isFloat(n){
+        return Number(n) === n && n % 1 !== 0;
+    }
+
+    function refreshRemainingBudget() {
+        var $lis = $('.nav-tabs li').not('.disabled').slice(1);
+        var totalPrice = 0;
+        $lis.each(function () {
+            var tabConcerned = $(this).find('a').attr('href');
+            totalPrice += parseFloat($('div' + tabConcerned).find('tr.active').find('td[data-field="price"]').text());
+        });
+        remainingBudget = customerBudget - totalPrice;
+    }
+
+    function formatValue(header, value) {
+        var td = '<td data-field = "' + header + '">';
+
+        if(isFloat(value)) {
+            value = parseFloat(value).toFixed(2);
+        }
+
+        switch(header.toUpperCase()) {
+            case "IMAGEURL":
+                td += '<img src="'+ value +'" alt="image" height="60">';
+                break;
+
+            case "PRICE":
+                if(remainingBudget - parseFloat(value) < 0) {
+                    td = '<td class="out-of-budget" data-field = "' + header + '">';
+                }
+                td += value + '.-';
+                break;
+
+            case "FREQUENCY":
+                td += value + ' GHz';
+                break;
+
+            case "CONSUMPTION":
+                td += value + ' W';
+                break;
+
+
+            default:
+                td += value;
+
+        }
+
+        td += '</td>';
+        return td;
+    }
+
     function createDataTable(id, url, callback) {
-        var content = '<h1>' + firstToUpperCase(id) +  '</h1>';
+        refreshRemainingBudget();
+        var content = '<h4 class="title-left">Remaining budget: </h4><span class="remaining-budget">' + remainingBudget.toFixed(2) + '</span>.-' +
+            '<h1>' + firstToUpperCase(id) +  '</h1>';
         $.get(url, function(data) {
             if(data.length === 0) {
                 content += '<p>No one would shit</p>';
@@ -33,7 +101,11 @@ $(document).ready(function () {
                     '<tr>';
 
                 for (var i = 1; i < Object.keys(data[0]).length; ++i) {
-                    content += '<th>' + firstToUpperCase(Object.keys(data[0])[i]) + '</th>'
+                    if(Object.keys(data[0])[i].toUpperCase() === 'IMAGEURL') {
+                        content += '<th>Image</th>'
+                    } else {
+                        content += '<th>' + firstToUpperCase(Object.keys(data[0])[i]) + '</th>'
+                    }
                 }
 
                 content +=
@@ -42,16 +114,19 @@ $(document).ready(function () {
                     '<tbody>';
 
                 for(var i = 0; i < data.length; ++i) {
-
-                    content += '<tr class="clickable-row" data-id=' + data[i].id + '>';
-
+                    var tr = '<tr class="clickable-row" data-id=' + data[i].id + '>';
                     for(var j = 1; j < Object.keys(data[0]).length; ++j) {
-                        if(Object.keys(data[0])[j].toUpperCase() === 'IMAGEURL') {
-                            content += '<td data-field = "' + Object.keys(data[0])[j] + '"><img src="'+ data[i][Object.keys(data[0])[j]] +'" alt="' + id + '_img" height="60"></td>';
-                        } else {
-                            content += '<td data-field = "' + Object.keys(data[0])[j] + '">' + data[i][Object.keys(data[0])[j]] + '</td>';
+                        var td = formatValue(Object.keys(data[0])[j], data[i][Object.keys(data[0])[j]]);
+                        if($(td).hasClass('out-of-budget')) {
+                            var $modifiedTr = $(tr);
+                            $modifiedTr.removeClass('clickable-row');
+                            $modifiedTr.addClass('out-of-budget');
+                            var html = $modifiedTr.wrap('<div>').parent().html();
+                            tr = html.substr(0, html.length - 5);
                         }
+                        tr += td;
                     }
+                    content += tr;
                 }
 
 
@@ -89,6 +164,12 @@ $(document).ready(function () {
 
             });
 
+            $('tr.out-of-budget').hover(function () {
+                $(this).popover({ content: "This component is not in your budget", placement: "bottom"}).popover('show');
+            }, function () {
+                $(this).popover('hide');
+            });
+
             callback();
         });
     }
@@ -98,6 +179,7 @@ $(document).ready(function () {
     }
 
     function loadDataTable($table) {
+        var headerLength = $table.find('th').length;
         $table.DataTable({
             'columnDefs': [
                 {
@@ -105,8 +187,12 @@ $(document).ready(function () {
                     'searchable': false,
                     'orderable': false
                 },
+                {
+                    'targets': headerLength - 1,
+                    "type": "numeric-unit"
+                }
             ],
-            'order': [$table.find('th').length - 1, 'asc']
+            'order': [headerLength - 1, 'asc']
         });
     }
 
@@ -125,6 +211,7 @@ $(document).ready(function () {
 
     var customerName;
     var customerBudget;
+    var remainingBudget;
     var processorId;
     var motherBoardId;
     var memoryId;
@@ -217,7 +304,8 @@ $(document).ready(function () {
                 break;
 
             case 'memory':
-                if(checkIfUserHasMadeChoice($form) === undefined) {
+                var $active_row = checkIfUserHasMadeChoice($form);
+                if($active_row === undefined) {
                     callback(false);
                 }
 
@@ -229,7 +317,8 @@ $(document).ready(function () {
                 break;
 
             case 'storage':
-                if(checkIfUserHasMadeChoice($form) === undefined) {
+                var $active_row = checkIfUserHasMadeChoice($form);
+                if($active_row === undefined) {
                     callback(false);
                 }
 

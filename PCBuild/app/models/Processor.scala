@@ -2,7 +2,19 @@ package models
 
 import play.api.db.slick.Config.driver.simple._
 
-case class Processor(id: Int, model: String, manufacturer: String, socket: String, nbCores: Int, nbThreads: Int, frequency: Float, consumption: Float, popularity: Int, price: Float, imageURL: String)
+case class Processor(
+                      id: Int,
+                      imageURL: String,
+                      manufacturer: String,
+                      model: String,
+                      socket: String,
+                      nbCores: Int,
+                      nbThreads: Int,
+                      frequency: Float,
+                      consumption: Float,
+                      popularity: Int,
+                      price: Float
+                    )
 
 /* Table mapping
  */
@@ -22,5 +34,5 @@ class ProcessorTable(tag: Tag) extends Table[Processor](tag, "PROCESSOR")
   def imageURL = column[String]("IMAGE_URL")
 
 
-  def * = (id, model, manufacturer, socket, nbCores, nbThreads, frequency, consumption, popularity, price, imageURL) <> (Processor.tupled, Processor.unapply)
+  def * = (id, imageURL, manufacturer, model, socket, nbCores, nbThreads, frequency, consumption, popularity, price) <> (Processor.tupled, Processor.unapply)
 }
