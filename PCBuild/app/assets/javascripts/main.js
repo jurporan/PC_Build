@@ -125,13 +125,13 @@ $(document).ready(function () {
 
     var customerName;
     var customerBudget;
-    var processorId;
-    var motherBoardId;
-    var memoryId;
-    var storageId;
-    var graphicCardId;
-    var alimentationId;
-    var caseId;
+    var $processor;
+    var $motherboard;
+    var $memory;
+    var $storage;
+    var $graphicCard;
+    var $alimentation;
+    var $computerCase;
 
     //Initialize tooltips
     $('.nav-tabs > li a[title]').tooltip();
@@ -191,7 +191,7 @@ $(document).ready(function () {
                     callback(false);
                 }
 
-                processorId = $active_row.data('id');
+                $processor = $active_row;
                 var socket = $active_row.find('td[data-field="socket"]').text();
                 socket = socket.replace('+', '%2B');
 
@@ -207,7 +207,7 @@ $(document).ready(function () {
                     callback(false);
                 }
 
-                motherBoardId = $active_row.data('id');
+                $motherboard = $active_row;
                 var memoryType = $active_row.find('td[data-field="memoryType"]').text();
 
                 createDataTable("memory", '/memories?memoryType=' + memoryType, function () {
@@ -217,11 +217,12 @@ $(document).ready(function () {
                 break;
 
             case 'memory':
-                if(checkIfUserHasMadeChoice($form) === undefined) {
+                var $active_row = checkIfUserHasMadeChoice($form);
+                if($active_row === undefined) {
                     callback(false);
                 }
 
-                memoryId = $active_row.data('id');
+                $memory = $active_row;
                 createDataTable("storage", '/storages', function () {
                     callback(true);
                 });
@@ -229,11 +230,12 @@ $(document).ready(function () {
                 break;
 
             case 'storage':
-                if(checkIfUserHasMadeChoice($form) === undefined) {
+                var $active_row = checkIfUserHasMadeChoice($form);
+                if($active_row === undefined) {
                     callback(false);
                 }
 
-                storageId = $active_row.data('id');
+                $storage = $active_row;
                 createDataTable("graphic-card", '/graphic_cards', function () {
                     callback(true);
                 });
@@ -246,7 +248,7 @@ $(document).ready(function () {
                     callback(false);
                 }
 
-                graphicCardId = $active_row.data('id');
+                $graphicCard = $active_row;
                 var consumptionGC = parseFloat($active_row.find('td[data-field="consumption"]').text());
                 var consumptionCPU = parseFloat($('div#processor').find('tr.active td[data-field="consumption"]').text())
 
@@ -262,7 +264,7 @@ $(document).ready(function () {
                     callback(false);
                 }
 
-                alimentationId = $active_row.data('id');
+                $alimentation = $active_row;
                 var gcLength = parseFloat($('div#graphic-card').find('tr.active td[data-field="length"]').text());
 
                 createDataTable("computer-case", '/computer_cases?gcLength=' + gcLength, function () {
@@ -272,11 +274,57 @@ $(document).ready(function () {
                 break;
 
             case 'computer-case':
+                var $active_row = checkIfUserHasMadeChoice($form);
                 callback(true);
-
-                caseId = $active_row.data('id');
+                $computerCase = $active_row;
                 // TODO Gérer les problèmes de budget et attention au retour en arrière, regarder une solution pour soit bloquer le passage en avant
                 // TODO Passer tous les composants à la vue finale pour l'affichage
+
+                var totalPrice = 0;
+                $("td#processor_name").html( "<b>" + $processor.find("td[data-field='manufacturer']").text() + "</b> " + $processor.find("td[data-field='model']").text())
+
+                $("td#processor_price").html($processor.find("td[data-field='price']").text() + " CHF")
+
+                totalPrice += parseFloat($processor.find("td[data-field='price']").text())
+
+                $("td#motherboard_name").html("<b>" + $motherboard.find("td[data-field='manufacturer']").text() + "</b>"  + $motherboard.find("td[data-field='model']").text())
+
+                $("td#motherboard_price").html($motherboard.find("td[data-field='price']").text() + " CHF")
+
+                totalPrice += parseFloat($motherboard.find("td[data-field='price']").text())
+
+                $("td#memory_name").html("<b>" + $memory.find("td[data-field='manufacturer']").text() + "</b> " + $memory.find("td[data-field='model']").text())
+
+                $("td#memory_price").html($memory.find("td[data-field='price']").text() + " CHF")
+
+                totalPrice += parseFloat($memory.find("td[data-field='price']").text())
+
+                $("td#storage_name").html("<b>" + $storage.find("td[data-field='manufacturer']").text() + "</b> " + $storage.find("td[data-field='model']").text())
+
+                $("td#storage_price").html($storage.find("td[data-field='price']").text() + " CHF")
+
+                totalPrice += parseFloat($storage.find("td[data-field='price']").text())
+
+                $("td#graphic_card_name").html("<b>" + $graphicCard.find("td[data-field='manufacturer']").text() + "</b> " + $graphicCard.find("td[data-field='model']").text())
+
+                $("td#grapic_card_price").html($graphicCard.find("td[data-field='price']").text() + " CHF")
+
+                totalPrice += parseFloat($graphicCard.find("td[data-field='price']").text())
+
+                $("td#alimentation_name").html("<b>" + $alimentation.find("td[data-field='manufacturer']").text() + "</b> " + $alimentation.find("td[data-field='model']").text())
+
+                $("td#alimentation_price").html($alimentation.find("td[data-field='price']").text() + " CHF")
+
+                totalPrice += parseFloat($alimentation.find("td[data-field='price']").text())
+
+                $("td#case_name").html("<b>" + $computerCase.find("td[data-field='manufacturer']").text() + "</b> " + $computerCase.find("td[data-field='model']").text())
+
+                $("td#case_price").html($computerCase.find("td[data-field='price']").text() + " CHF")
+
+                totalPrice += parseFloat($computerCase.find("td[data-field='price']").text())
+
+                $("td#total_price").html("<b>" + totalPrice + " CHF" + "</b>")
+
                 break;
         }
     }
