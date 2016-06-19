@@ -68,4 +68,5 @@ object Application extends Controller {
     val json = Json.toJson(computerCases.filter(_.gc_max_length > gcLength).list);
     Ok(json)
   }
+
 }
