@@ -213,6 +213,7 @@ $(document).ready(function () {
     function loadDataTable($table, numericTargets) {
         var headerLength = $table.find('th').length;
         $table.DataTable({
+            "paging":   false,
             'columnDefs': [
                 {
                     'targets': 0,
