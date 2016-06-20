@@ -21,11 +21,11 @@ $(document).ready(function () {
 
     function nextTab(elem) {
         $(elem).next().find('a[data-toggle="tab"]').click();
+        //refreshRemainingBudget($('div' + $(elem).next().find('a[data-toggle="tab"]').attr('href')));
         $('tr.clickable-row').click(function () {
             $(this).addClass('active').siblings().removeClass('active');
             $('.nav-tabs li.active').nextAll().addClass('disabled');
-            refreshRemainingBudget();
-            $(this).closest('div.tab-pane').find('.remaining-budget').text(remainingBudget.toFixed(2));
+            refreshRemainingBudget($(this).closest('div.tab-pane'));
         });
     }
 
@@ -37,14 +37,19 @@ $(document).ready(function () {
         return Number(n) === n && n % 1 !== 0;
     }
 
-    function refreshRemainingBudget() {
+    function refreshRemainingBudget($tabPane) {
         var $lis = $('.nav-tabs li').not('.disabled').slice(1);
         var totalPrice = 0;
         $lis.each(function () {
             var tabConcerned = $(this).find('a').attr('href');
-            totalPrice += parseFloat($('div' + tabConcerned).find('tr.active').find('td[data-field="price"]').text());
+            var $ActiveTr = $('div' + tabConcerned).find('tr.active');
+            if($ActiveTr.length != 0) {
+                totalPrice += parseFloat($('div' + tabConcerned).find('tr.active').find('td[data-field="price"]').text());
+            }
         });
         remainingBudget = customerBudget - totalPrice;
+        if($tabPane != null)
+            $tabPane.find('.remaining-budget').text(remainingBudget.toFixed(2))
     }
 
     function formatValue(header, value) {
@@ -53,6 +58,8 @@ $(document).ready(function () {
         if(isFloat(value)) {
             value = parseFloat(value).toFixed(2);
         }
+
+        var numeric = false;
 
         switch(header.toUpperCase()) {
             case "IMAGEURL":
@@ -64,16 +71,38 @@ $(document).ready(function () {
                     td = '<td class="out-of-budget" data-field = "' + header + '">';
                 }
                 td += value + '.-';
+                numeric = true;
                 break;
 
             case "FREQUENCY":
                 td += value + ' GHz';
+                numeric = true;
                 break;
 
             case "CONSUMPTION":
+            case "POWER":
                 td += value + ' W';
+                numeric = true;
                 break;
 
+            case "MEMORYSIZE":
+            case "GIGABYTES":
+                td += value + ' GB';
+                numeric = true;
+                break;
+
+            case "ROTATIONSPEED":
+                td += value + ' RPM';
+                numeric = true;
+                break;
+
+            case "WIDTH":
+            case "HEIGHT":
+            case "LENGTH":
+            case "GC_MAX_LENGTH":
+                td += value + ' cm';
+                numeric = true;
+                break;
 
             default:
                 td += value;
@@ -81,16 +110,18 @@ $(document).ready(function () {
         }
 
         td += '</td>';
-        return td;
-    }
+        return {td: td, numeric: numeric}
+    };
 
     function createDataTable(id, url, callback) {
-        refreshRemainingBudget();
-        var content = '<h4 class="title-left">Remaining budget: </h4><span class="remaining-budget">' + remainingBudget.toFixed(2) + '</span>.-' +
+        refreshRemainingBudget(null);
+        var numericTargets = new Set();
+        var content = '<div class="alert alert-info" role="alert">You still have <span class="remaining-budget">' + remainingBudget.toFixed(2) + '</span> CHF.</div>' +
+            //'<h4 class="title-left">Remaining budget: </h4><span class="remaining-budget">' + remainingBudget.toFixed(2) + '</span>.-' +
             '<h1>' + firstToUpperCase(id) +  '</h1>';
         $.get(url, function(data) {
             if(data.length === 0) {
-                content += '<p>No one would shit</p>';
+                content += '<p>No compatible component.</p>';
 
             } else {
 
@@ -116,7 +147,9 @@ $(document).ready(function () {
                 for(var i = 0; i < data.length; ++i) {
                     var tr = '<tr class="clickable-row" data-id=' + data[i].id + '>';
                     for(var j = 1; j < Object.keys(data[0]).length; ++j) {
-                        var td = formatValue(Object.keys(data[0])[j], data[i][Object.keys(data[0])[j]]);
+                        var format = formatValue(Object.keys(data[0])[j], data[i][Object.keys(data[0])[j]]);
+                        var td = format.td;
+                        if(format.numeric) numericTargets.add(j - 1);
                         if($(td).hasClass('out-of-budget')) {
                             var $modifiedTr = $(tr);
                             $modifiedTr.removeClass('clickable-row');
@@ -144,7 +177,7 @@ $(document).ready(function () {
                 '</form>';
 
             $('div#' + id).html(content);
-            loadDataTable($('div#' + id).find('table'));
+            loadDataTable($('div#' + id).find('table'), numericTargets);
 
 
             $('div#' + id).find('form').submit(function (e) {
@@ -161,7 +194,6 @@ $(document).ready(function () {
             $(".prev-step").click(function (e) {
                 var $active = $('.wizard .nav-tabs li.active');
                 prevTab($active);
-
             });
 
             $('tr.out-of-budget').hover(function () {
@@ -178,7 +210,7 @@ $(document).ready(function () {
         $table.dataTable().fnDestroy();
     }
 
-    function loadDataTable($table) {
+    function loadDataTable($table, numericTargets) {
         var headerLength = $table.find('th').length;
         $table.DataTable({
             'columnDefs': [
@@ -188,7 +220,7 @@ $(document).ready(function () {
                     'orderable': false
                 },
                 {
-                    'targets': headerLength - 1,
+                    'targets': Array.from(numericTargets),
                     "type": "numeric-unit"
                 }
             ],
@@ -211,6 +243,7 @@ $(document).ready(function () {
 
     var customerName;
     var customerBudget;
+    var remainingBudget;
     var $processor;
     var $motherboard;
     var $memory;
@@ -233,6 +266,13 @@ $(document).ready(function () {
         }
     });
 
+    $('li[role="presentation"]').click(function () {
+       if(!$(this).hasClass('disabled')) {
+           var idTab = $(this).find('a[data-toggle="tab"]').attr('href');
+           refreshRemainingBudget($('div' + idTab));
+       }
+    });
+
     $("form").submit(function (e) {
         e.preventDefault();
         checkConditions($(this).closest('div').attr('id'), function (Continue) {
@@ -242,6 +282,11 @@ $(document).ready(function () {
                 nextTab($active);
             }
         })
+    });
+
+    $('input#budget').on('input', function () {
+        var $lis = $('.nav-tabs li').not('.disabled').slice(1);
+        $lis.addClass('disabled');
     });
 
     $(".prev-step").click(function (e) {

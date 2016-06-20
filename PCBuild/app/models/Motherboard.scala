@@ -4,7 +4,7 @@ import play.api.db.slick.Config.driver.simple._
 import play.api.libs.json.Json
 
 
-case class Motherboard(id: Int, manufacturer: String, model: String, socket: String, memoryType: String, imageUrl: String, price: Float, popularity: Int)
+case class Motherboard(id: Int, imageUrl: String, manufacturer: String, model: String, socket: String, memoryType: String,  popularity: Int, price: Float)
 
 class MotherboardTable(tag: Tag) extends Table[Motherboard](tag, "MOTHERBOARD") {
 
@@ -18,5 +18,5 @@ class MotherboardTable(tag: Tag) extends Table[Motherboard](tag, "MOTHERBOARD") 
 
   def popularity = column[Int]("POPULARITY", O.NotNull)
 
-  def * = (id, manufacturer, model, socket, memoryType, imageUrl, price, popularity) <> (Motherboard.tupled, Motherboard.unapply)
+  def * = (id, imageUrl, manufacturer, model, socket, memoryType, popularity , price) <> (Motherboard.tupled, Motherboard.unapply)
 }

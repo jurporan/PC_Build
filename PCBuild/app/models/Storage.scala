@@ -4,13 +4,13 @@ import play.api.db.slick.Config.driver.simple._
 
 case class Storage(
                     id: Int,
+                    imageUrl: String,
                     manufacturer: String,
                     model: String,
                     gigabytes: Int,
                     rotationSpeed: Int,
-                    imageUrl: String,
-                    price: Float,
-                    popularity: Int
+                    popularity: Int,
+                    price: Float
                   )
 
 class StorageTable(tag: Tag) extends Table[Storage](tag, "STORAGE") {
@@ -25,5 +25,5 @@ class StorageTable(tag: Tag) extends Table[Storage](tag, "STORAGE") {
 
   def popularity = column[Int]("POPULARITY", O.NotNull)
 
-  def * = (id, manufacturer, model, gigabytes, rotationSpeed, imageUrl, price, popularity) <> (Storage.tupled, Storage.unapply)
+  def * = (id, imageUrl, manufacturer, model, gigabytes, rotationSpeed, popularity, price) <> (Storage.tupled, Storage.unapply)
 }

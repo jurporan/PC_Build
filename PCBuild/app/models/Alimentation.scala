@@ -3,7 +3,7 @@ package models
 import play.api.db.slick.Config.driver.simple._
 
 
-case class Alimentation(id: Int, manufacturer: String, model: String, power: Float, imageUrl: String, price: Float, popularity: Int)
+case class Alimentation(id: Int, imageUrl: String, manufacturer: String, model: String, power: Float, popularity: Int, price: Float)
 
 class AlimentationTable(tag: Tag) extends Table[Alimentation](tag, "ALIMENTATION") {
 
@@ -16,5 +16,5 @@ class AlimentationTable(tag: Tag) extends Table[Alimentation](tag, "ALIMENTATION
 
   def popularity = column[Int]("POPULARITY", O.NotNull)
 
-  def * = (id, manufacturer, model, power, imageUrl, price, popularity) <> (Alimentation.tupled, Alimentation.unapply)
+  def * = (id, imageUrl, manufacturer, model, power, popularity, price) <> (Alimentation.tupled, Alimentation.unapply)
 }

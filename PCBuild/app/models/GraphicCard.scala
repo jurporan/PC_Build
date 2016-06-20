@@ -2,7 +2,7 @@ package models
 
 import play.api.db.slick.Config.driver.simple._
 
-case class GraphicCard(id: Int, model: String, manufacturer: String, memory: Float, frequency: Float, width: Float, height: Float, length: Float, consumption:Float,  popularity: Int, price: Float, imageURL: String)
+case class GraphicCard(id: Int, imageURL: String, manufacturer: String, model: String, memory: Float, frequency: Float, width: Float, height: Float, length: Float, consumption:Float,  popularity: Int, price: Float)
 
 /* Table mapping
  */
@@ -21,5 +21,5 @@ class GraphicCardTable(tag: Tag) extends Table[GraphicCard](tag, "GRAPHIC_CARD")
   def price = column[Float]("PRICE", O.NotNull)
   def imageURL = column[String]("IMAGE_URL")
 
-  def * = (id, model, manufacturer, memory, frequency, width, height, length, consumption, popularity, price, imageURL) <> (GraphicCard.tupled, GraphicCard.unapply)
+  def * = (id, imageURL, manufacturer, model, memory, frequency, width, height, length, consumption, popularity, price) <> (GraphicCard.tupled, GraphicCard.unapply)
 }

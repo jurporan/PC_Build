@@ -164,3 +164,7 @@ li.paginate_button.active:after {
 .title-left {
     display: inline;
 }
+
+.remaining-budget {
+    text-decoration: underline;
+}
