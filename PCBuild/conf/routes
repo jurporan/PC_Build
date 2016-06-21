@@ -12,7 +12,17 @@ GET     /storages                   controllers.Application.getStorages()
 GET     /graphic_cards              controllers.Application.getGraphicCards()
 GET     /alimentations              controllers.Application.getAlimentations(power: Float)
 GET     /computer_cases             controllers.Application.getComputerCases(gcLength: Float)
+GET /processors_frequency_range controllers.Application.getProcessorsFrequencyRange()
 
+GET /memories_size_range controllers.Application.getMemorySizeRange()
+
+GET /storages_size_range controllers.Application.getStorageSizeRange()
+
+GET /storages_rpm_range controllers.Application.getStorageRPMRange()
+
+GET /graphic_cards_memory_range controllers.Application.getGraphicMemoryRange()
+
+GET /graphic_cards_frequency_range controllers.Application.getGraphicFrequencyRange()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

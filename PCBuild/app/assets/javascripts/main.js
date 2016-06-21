@@ -122,7 +122,6 @@ $(document).ready(function () {
         $.get(url, function(data) {
             if(data.length === 0) {
                 content += '<p>No compatible component.</p>';
-
             } else {
 
                 content +=
@@ -409,13 +408,25 @@ $(document).ready(function () {
                 var $active_row = checkIfUserHasMadeChoice($form);
                 callback(true);
                 $computerCase = $active_row;
-                // TODO Gérer les problèmes de budget et attention au retour en arrière, regarder une solution pour soit bloquer le passage en avant
-                // TODO Passer tous les composants à la vue finale pour l'affichage
 
                 var totalPrice = 0;
                 $("td#processor_name").html( "<b>" + $processor.find("td[data-field='manufacturer']").text() + "</b> " + $processor.find("td[data-field='model']").text())
 
                 $("td#processor_price").html($processor.find("td[data-field='price']").text() + " CHF")
+
+                $("td#processor_freq").html("Frequency : " + $processor.find("td[data-field='frequency']").text())
+
+                $("td#processor_cores").html("Number of cores : " + $processor.find("td[data-field='nbCores']").text())
+
+                $.get("/processors_frequency_range", function(data){
+                    freq_range =  data[1] - data[0]
+                    freq_step = freq_range / 6
+                    freq = parseFloat($processor.find("td[data-field='frequency']").text())
+                    nbCores = parseInt($processor.find("td[data-field='nbCores']").text())
+                    $("td#processor_quality").html(Math.round((freq - data[0])/freq_step + nbCores) + "/10")
+                });
+
+                $("td#processor_popularity").html($processor.find("td[data-field='popularity']").text())
 
                 totalPrice += parseFloat($processor.find("td[data-field='price']").text())
 
@@ -429,19 +440,73 @@ $(document).ready(function () {
 
                 $("td#memory_price").html($memory.find("td[data-field='price']").text() + " CHF")
 
+                $("td#memory_size").html("Memory size : " + $memory.find("td[data-field='memorySize']").text())
+
+                $.get("/memories_size_range", function(data){
+                    diff = 0
+                    if(data[1] < 10) {
+                        diff = 10 - data[1]
+                    }
+                    size = parseFloat($memory.find("td[data-field='memorySize']").text())
+                    if (size > 10) {
+                        size = 10
+                    }
+                    $("td#memory_quality").html(Math.round(size + diff) + "/10")
+                });
+
                 totalPrice += parseFloat($memory.find("td[data-field='price']").text())
+
+                $("td#memory_popularity").html($memory.find("td[data-field='popularity']").text())
+
 
                 $("td#storage_name").html("<b>" + $storage.find("td[data-field='manufacturer']").text() + "</b> " + $storage.find("td[data-field='model']").text())
 
                 $("td#storage_price").html($storage.find("td[data-field='price']").text() + " CHF")
 
+                $("td#storage_size").html("Size : " + $storage.find("td[data-field='gigabytes']").text())
+
+                $("td#storage_rpm").html("RPM : " + $storage.find("td[data-field='rotationSpeed']").text())
+
+                $.get("/storages_size_range", function(data){
+                    $.get("/storages_rpm_range", function(data2){
+                        size_range =  data[1] - data[0]
+                        size_step = size_range / 5
+                        size = parseFloat($storage.find("td[data-field='gigabytes']").text())
+                        rpm_range =  data2[1] - data2[0]
+                        rpm_step = rpm_range / 5
+                        rpm = parseFloat($storage.find("td[data-field='rotationSpeed']").text())
+                        $("td#storage_quality").html(Math.round((size - data[0])/size_step + ((rpm - data2[0])/rpm_step)) + "/10")
+                    });
+                });
+
                 totalPrice += parseFloat($storage.find("td[data-field='price']").text())
+
+                $("td#storage_popularity").html($storage.find("td[data-field='popularity']").text())
+
 
                 $("td#graphic_card_name").html("<b>" + $graphicCard.find("td[data-field='manufacturer']").text() + "</b> " + $graphicCard.find("td[data-field='model']").text())
 
-                $("td#grapic_card_price").html($graphicCard.find("td[data-field='price']").text() + " CHF")
+                $("td#graphic_card_price").html($graphicCard.find("td[data-field='price']").text() + " CHF")
+
+                $("td#graphic_card_freq").html("Frequency : " + $graphicCard.find("td[data-field='frequency']").text())
+
+                $("td#graphic_card_size").html("Memory size : " + $graphicCard.find("td[data-field='memory']").text()+ " GB")
+
+                $.get("/graphic_cards_memory_range", function(data){
+                    $.get("/graphic_cards_frequency_range", function(data2){
+                        size_range =  data[1] - data[0]
+                        size_step = size_range / 5
+                        size = parseFloat($graphicCard.find("td[data-field='memory']").text())
+                        freq_range =  data2[1] - data2[0]
+                        freq_step = freq_range / 5
+                        freq = parseFloat($graphicCard.find("td[data-field='frequency']").text())
+                        $("td#graphic_card_quality").html(Math.round((size - data[0])/size_step + ((freq - data2[0])/rpm_step)) + "/10")
+                    });
+                });
 
                 totalPrice += parseFloat($graphicCard.find("td[data-field='price']").text())
+                $("td#graphic_card_popularity").html($graphicCard.find("td[data-field='popularity']").text())
+
 
                 $("td#alimentation_name").html("<b>" + $alimentation.find("td[data-field='manufacturer']").text() + "</b> " + $alimentation.find("td[data-field='model']").text())
 
@@ -456,6 +521,7 @@ $(document).ready(function () {
                 totalPrice += parseFloat($computerCase.find("td[data-field='price']").text())
 
                 $("td#total_price").html("<b>" + totalPrice + " CHF" + "</b>")
+
 
                 break;
         }
