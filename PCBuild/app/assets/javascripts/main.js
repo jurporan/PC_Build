@@ -195,6 +195,24 @@ $(document).ready(function () {
                 prevTab($active);
             });
 
+            $("button#finish_button").click(function () {
+                $.get("update_processor_popularity?popularity=" +  parseInt($processor.find("td[data-field='popularity']").text()) + "&manufacturer=" + $processor.find("td[data-field='manufacturer']").text() + "&model=" + $processor.find("td[data-field='model']").text(), function(data){});
+
+                $.get("update_motherboard_popularity?popularity=" +  parseInt($motherboard.find("td[data-field='popularity']").text()) + "&manufacturer=" + $motherboard.find("td[data-field='manufacturer']").text() + "&model=" + $motherboard.find("td[data-field='model']").text(), function(data){});
+
+                $.get("update_memory_popularity?popularity=" +  parseInt($memory.find("td[data-field='popularity']").text()) + "&manufacturer=" + $memory.find("td[data-field='manufacturer']").text() + "&model=" + $memory.find("td[data-field='model']").text(), function(data){});
+
+                $.get("update_storage_popularity?popularity=" +  parseInt($storage.find("td[data-field='popularity']").text()) + "&manufacturer=" + $storage.find("td[data-field='manufacturer']").text() + "&model=" + $storage.find("td[data-field='model']").text(), function(data){});
+
+                $.get("update_graphic_card_popularity?popularity=" +  parseInt($graphicCard.find("td[data-field='popularity']").text()) + "&manufacturer=" + $graphicCard.find("td[data-field='manufacturer']").text() + "&model=" + $graphicCard.find("td[data-field='model']").text(), function(data){});
+
+                $.get("update_alimentation_popularity?popularity=" +  parseInt($alimentation.find("td[data-field='popularity']").text()) + "&manufacturer=" + $alimentation.find("td[data-field='manufacturer']").text() + "&model=" + $alimentation.find("td[data-field='model']").text(), function(data){});
+
+                $.get("update_computer_case_popularity?popularity=" +  parseInt($computerCase.find("td[data-field='popularity']").text()) + "&manufacturer=" + $computerCase.find("td[data-field='manufacturer']").text() + "&model=" + $computerCase.find("td[data-field='model']").text(), function(data){});
+
+                $("span#first_tab").click();
+            });
+
             $('tr.out-of-budget').hover(function () {
                 $(this).popover({ content: "This component is not in your budget", placement: "bottom"}).popover('show');
             }, function () {
@@ -500,7 +518,7 @@ $(document).ready(function () {
                         freq_range =  data2[1] - data2[0]
                         freq_step = freq_range / 5
                         freq = parseFloat($graphicCard.find("td[data-field='frequency']").text())
-                        $("td#graphic_card_quality").html(Math.round((size - data[0])/size_step + ((freq - data2[0])/rpm_step)) + "/10")
+                        $("td#graphic_card_quality").html(Math.round((size - data[0])/size_step + ((freq - data2[0])/freq_step)) + "/10")
                     });
                 });
 

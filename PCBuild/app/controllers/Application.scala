@@ -111,4 +111,38 @@ object Application extends Controller {
     Ok(json)
   }
 
+  def updateProcessorPopularity(popularity :String, manufacturer :String, model :String) = DBAction { implicit rs =>
+      processors.filter(_.manufacturer === java.net.URLDecoder.decode(manufacturer, "UTF-8")).filter(_.model === java.net.URLDecoder.decode(model, "UTF-8")).map(p => p.popularity).update(popularity.toInt + 1)
+      Ok("Pouet")
+  }
+
+  def updateMotherboardPopularity(popularity :String, manufacturer :String, model :String) = DBAction { implicit rs =>
+      motherboards.filter(_.manufacturer === java.net.URLDecoder.decode(manufacturer, "UTF-8")).filter(_.model === java.net.URLDecoder.decode(model, "UTF-8")).map(p => p.popularity).update(popularity.toInt + 1)
+      Ok("Pouet")
+  }
+
+  def updateMemoryPopularity(popularity :String, manufacturer :String, model :String) = DBAction { implicit rs =>
+    memories.filter(_.manufacturer === java.net.URLDecoder.decode(manufacturer, "UTF-8")).filter(_.model === java.net.URLDecoder.decode(model, "UTF-8")).map(p => p.popularity).update(popularity.toInt + 1)
+    Ok("Pouet")
+  }
+
+  def updateStoragePopularity(popularity :String, manufacturer :String, model :String) = DBAction { implicit rs =>
+    storages.filter(_.manufacturer === java.net.URLDecoder.decode(manufacturer, "UTF-8")).filter(_.model === java.net.URLDecoder.decode(model, "UTF-8")).map(p => p.popularity).update(popularity.toInt + 1)
+    Ok("Pouet")
+  }
+
+  def updateGraphicCardPopularity(popularity :String, manufacturer :String, model :String) = DBAction { implicit rs =>
+    graphicCards.filter(_.manufacturer === java.net.URLDecoder.decode(manufacturer, "UTF-8")).filter(_.model === java.net.URLDecoder.decode(model, "UTF-8")).map(p => p.popularity).update(popularity.toInt + 1)
+    Ok("Pouet")
+  }
+
+  def updateAlimentationPopularity(popularity :String, manufacturer :String, model :String) = DBAction { implicit rs =>
+    alimentations.filter(_.manufacturer === java.net.URLDecoder.decode(manufacturer, "UTF-8")).filter(_.model === java.net.URLDecoder.decode(model, "UTF-8")).map(p => p.popularity).update(popularity.toInt + 1)
+    Ok("Pouet")
+  }
+
+  def updateComputerCasePopularity(popularity :String, manufacturer :String, model :String) = DBAction { implicit rs =>
+    computerCases.filter(_.manufacturer === java.net.URLDecoder.decode(manufacturer, "UTF-8")).filter(_.model === java.net.URLDecoder.decode(model, "UTF-8")).map(p => p.popularity).update(popularity.toInt + 1)
+    Ok("Pouet")
+  }
 }
