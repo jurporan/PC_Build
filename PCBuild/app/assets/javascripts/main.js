@@ -540,6 +540,8 @@ $(document).ready(function () {
 
                 $("td#total_price").html("<b>" + totalPrice + " CHF" + "</b>")
 
+                $('img#case-img').attr('src', $computerCase.find("td[data-field='imageURL']").find('img').attr('src'));
+
 
                 break;
         }
