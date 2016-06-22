@@ -438,10 +438,10 @@ $(document).ready(function () {
 
                 $.get("/processors_frequency_range", function(data){
                     freq_range =  data[1] - data[0]
-                    freq_step = freq_range / 6
+                    freq_step = freq_range / 10
                     freq = parseFloat($processor.find("td[data-field='frequency']").text())
                     nbCores = parseInt($processor.find("td[data-field='nbCores']").text())
-                    $("td#processor_quality").html(Math.round((freq - data[0])/freq_step + nbCores) + "/10")
+                    $("td#processor_quality").html(Math.round((freq - data[0])/freq_step) + "/10")
                 });
 
                 $("td#processor_popularity").html($processor.find("td[data-field='popularity']").text())
